@@ -1,7 +1,15 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
+
+
+
+export interface EmojiInterface{
+  id?: number
+  name: string
+  url: string
+}
 
 @Entity()
-export default class Emoji extends BaseEntity {
+export class Emoji extends BaseEntity {
 
   @PrimaryGeneratedColumn()
   id?: number
