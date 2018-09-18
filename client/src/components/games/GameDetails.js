@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
 import {getGames, joinGame, updateGame} from '../../actions/games'
+import {getImages} from '../../actions/images'
 import {getUsers} from '../../actions/users'
 import {userId} from '../../jwt'
 import Paper from 'material-ui/Paper'
@@ -17,13 +18,15 @@ class GameDetails extends PureComponent {
     }
   }
 
+  componentDidMount(){
+    this.props.getImages()
+  }
+
   joinGame = () => this.props.joinGame(this.props.game.id)
 
   makeMove = (toRow, toCell) => {
     const {game, updateGame} = this.props
 
-
-    //DEFINATELY NEED TO MAKE CHANGES HERE - ON CLICK THE CARD DISPLAYS (TURNS AROUND?)
     const board = game.board.map(
       (row, rowIndex) => row.map((cell, cellIndex) => {
         if (rowIndex === toRow && cellIndex === toCell) return game.turn
@@ -37,7 +40,7 @@ class GameDetails extends PureComponent {
 
 
   render() {
-    const {game, users, authenticated, userId} = this.props
+    const {game, images, users, authenticated, userId} = this.props
 
     if (!authenticated) return (
 			<Redirect to="/login" />
@@ -78,7 +81,7 @@ class GameDetails extends PureComponent {
 
       {
         game.status !== 'pending' &&
-        <Board board={game.board} makeMove={this.makeMove}/>
+        <Board board={game.board} makeMove={this.makeMove} images={images}/>
       }
     </Paper>)
   }
@@ -88,11 +91,12 @@ const mapStateToProps = (state, props) => ({
   authenticated: state.currentUser !== null,
   userId: state.currentUser && userId(state.currentUser.jwt),
   game: state.games && state.games[props.match.params.id],
-  users: state.users
+  users: state.users,
+  images: state.images
 })
 
 const mapDispatchToProps = {
-  getGames, getUsers, joinGame, updateGame
+  getGames, getUsers, joinGame, updateGame, getImages
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameDetails)

@@ -3,19 +3,20 @@ import User from '../users/entity'
 //import {Emoji} from '../emojis/entity';
 
 export type Symbol= "x" | "o"
-export type Row = String[]
+export type Row = Number[]
 export type Board = [ Row, Row, Row ]
 
 type Status = 'pending' | 'started' | 'finished'
 
 
-const emojis = ["https://banner2.kisspng.com/20171201/b49/smiling-face-with-sunglasses-cool-emoji-png-5a222c11e0dd77.6968424215121889459211.jpg",
- "https://banner2.kisspng.com/20180325/ute/kisspng-emoji-love-heart-sticker-emoticon-emoji-5ab86fdec2e6d0.1707378915220367027983.jpg",
-  "https://banner2.kisspng.com/20180202/srq/kisspng-laughter-face-with-tears-of-joy-emoji-emoticon-cli-crying-emoji-png-transparent-image-5a754051c0cbe5.6174084415176336177897.jpg",
-   "https://banner2.kisspng.com/20180402/ogw/kisspng-emoji-wink-smiley-clip-art-crying-emoji-5ac2953f831bb2.847187371522701631537.jpg",
-    "https://banner2.kisspng.com/20180202/biw/kisspng-t-shirt-emoji-domain-nerd-glasses-sunglasses-emoji-png-clipart-5a73fc78eb8030.6868989215175507129646.jpg",
-     "https://banner2.kisspng.com/20180404/qye/kisspng-pile-of-poo-emoji-sadness-emoticon-sad-emoji-5ac49f3e848fd4.339742351522835262543.jpg"]
+// const emojis = ["https://banner2.kisspng.com/20171201/b49/smiling-face-with-sunglasses-cool-emoji-png-5a222c11e0dd77.6968424215121889459211.jpg",
+//  "https://banner2.kisspng.com/20180325/ute/kisspng-emoji-love-heart-sticker-emoticon-emoji-5ab86fdec2e6d0.1707378915220367027983.jpg",
+//   "https://banner2.kisspng.com/20180202/srq/kisspng-laughter-face-with-tears-of-joy-emoji-emoticon-cli-crying-emoji-png-transparent-image-5a754051c0cbe5.6174084415176336177897.jpg",
+//    "https://banner2.kisspng.com/20180402/ogw/kisspng-emoji-wink-smiley-clip-art-crying-emoji-5ac2953f831bb2.847187371522701631537.jpg",
+//     "https://banner2.kisspng.com/20180202/biw/kisspng-t-shirt-emoji-domain-nerd-glasses-sunglasses-emoji-png-clipart-5a73fc78eb8030.6868989215175507129646.jpg",
+//      "https://banner2.kisspng.com/20180404/qye/kisspng-pile-of-poo-emoji-sadness-emoticon-sad-emoji-5ac49f3e848fd4.339742351522835262543.jpg"]
 
+const emojis = [1,2,3,4,5,6]
 
 const starterBoard = emojis.concat(emojis)
 
