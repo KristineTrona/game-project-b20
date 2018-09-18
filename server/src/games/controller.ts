@@ -7,7 +7,6 @@ import { Game, Player, Board } from './entities'
 import {IsBoard} from './logic'
 import { Validate } from 'class-validator'
 import {io} from '../index'
-import { clearLine } from 'readline';
 //isValidTransition, calculateWinner, finished
 
 

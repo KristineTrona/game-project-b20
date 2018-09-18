@@ -1,4 +1,11 @@
 .board-tile {
   height: 50px;
   width: 50px;
+  border: 1px black solid;
+  display: inline-block;
+}
+
+img {
+  width: 50%;
+  height: 50%;
 }
