@@ -3,17 +3,17 @@ import './Board.css'
 
 const renderCel = (makeMove, rowIndex, cellIndex, symbol, hasTurn) => {
   return (
-    <button
+    <div
       className="board-tile"
       disabled={hasTurn}
       onClick={() => makeMove(rowIndex, cellIndex)}
       key={`${rowIndex}-${cellIndex}`}
-    >Hello</button>
+    ></div>
   )
 }
 
 export default ({board, makeMove}) => board.map((cells, rowIndex) =>
-  <div key={rowIndex}>
+  <div className="bla" key={rowIndex}>
     {cells.map((symbol, cellIndex) => renderCel(makeMove, rowIndex, cellIndex,symbol,false))}
   </div>
 )
