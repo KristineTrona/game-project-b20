@@ -12,40 +12,36 @@
 
 .card{
   border: 1px black solid;
-  /* display: inline-block; */
+  position: relative;
+  display: inline-block;
 }
 
 .card > .board-tile-front{
   position: absolute;
-  -webkit-transform: perspective(600px) rotateY(0deg);
   transform: perspective(600px) rotateY(0deg);
-  -webkit-backface-visibility:  hidden;
   color: yellow;
   backface-visibility:  hidden;
   transition: transform .5s linear 0s;
   transition: -webkit-transform .5s linear 0s;
-}
+} 
 
 .card > .board-tile-back{
   position: relative;
-  -webkit-transform: perspective(600px) rotateY(180deg);
   transform: perspective(600px) rotateY(180deg);
   background: blue;
-  -webkit-backface-visibility:  hidden;
   backface-visibility:  hidden;
   transition: transform .5s linear 0s;
   transition: -webkit-transform .5s linear 0s;
 }
 
-/* .card:active> .board-tile-front{
-  -webkit-transform: perspective(600px) rotateY(-180deg);
+.board-tile-front-selected{
   transform: perspective(600px) rotateY(-180deg);
 }
 
-.card:active > .board-tile-back{
-  -webkit-transform: perspective(600px) rotateY(0deg);
+.board-tile-back-selected{
   transform: perspective(600px) rotateY(0deg);
-} */
+}
+
 
 img {
   width: 70%;
@@ -55,7 +51,6 @@ img {
   margin-top: 15%;
   margin-left: auto;
   margin-right: auto;
-  /* visibility: hidden; */
 }
 
 .bla {
