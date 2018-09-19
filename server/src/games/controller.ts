@@ -104,8 +104,29 @@ export default class GameController {
     //   game.status = 'finished'
     // }
     else {
-      game.turn = player.symbol === 'x' ? 'o' : 'x'
+      const selectedImages = await update.board.map(row => row.filter(cell => cell !== null))
+    
+      const imagesArray = [].concat.apply([], selectedImages)
+
+      if(imagesArray.length ===2 && imagesArray[0] === imagesArray[1]){
+        //Make updated board cell be equal to ""
+        
+        const correctMove = update.board.map(row => row.map(cell => {
+          if(cell === imagesArray[0]){
+            return ""
+          }
+          else {
+            return cell
+          }
+        }))
+        update.board = correctMove
+      }
+      else{
+        game.turn = (player.symbol === 'x' && imagesArray.length ===2) ? 'o' : 'x'
+        // make update.board cells turn back to null with some latency
+      }
     }
+
     game.board = update.board
     await game.save()
     

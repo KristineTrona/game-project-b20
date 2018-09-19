@@ -6,15 +6,24 @@ const renderCel = (makeMove, rowIndex, cellIndex, cell, hasTurn, images) => {
   if(cell=== null){
     return(
     <div
-      className="card"
+      className="card-front"
       id={`${rowIndex}-${cellIndex}`}
       disabled={hasTurn}
       onClick={() => makeMove(rowIndex, cellIndex)}
       key={`${rowIndex}-${cellIndex}`}>
     </div>)
+    } else if(cell===""){
+      return(
+        <div
+          className="card-guessed"
+          id={`${rowIndex}-${cellIndex}`}
+          disabled={hasTurn}
+          onClick={() => makeMove(rowIndex, cellIndex)}
+          key={`${rowIndex}-${cellIndex}`}>
+        </div>)
   } else return (
     <div
-      className="card"
+      className="card-back"
       id={`${rowIndex}-${cellIndex}`}
       disabled={hasTurn}
       onClick={() => makeMove(rowIndex, cellIndex)}

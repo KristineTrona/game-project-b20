@@ -10,12 +10,16 @@
   grid-column-gap: 10px;
 }
 
-.card{
+.card-front, .card-back{
   border: 1px black solid;
   position: relative;
   display: inline-block;
   min-width: 50px;
   min-height: 50px;
+}
+
+.card-guessed{
+  visibility: hidden;
 }
 
 /* .card > .board-tile-front{
