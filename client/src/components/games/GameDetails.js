@@ -22,6 +22,7 @@ class GameDetails extends PureComponent {
     this.props.getImages()
   }
 
+
   joinGame = () => this.props.joinGame(this.props.game.id)
 
   makeMove = (toRow, toCell) => {
@@ -30,15 +31,16 @@ class GameDetails extends PureComponent {
     const card = document.getElementById(`${toRow}-${toCell}`)
     card.className = "board-tile-back-selected"
     
-
-
     const board = game.board.map(
       (row, rowIndex) => row.map((cell, cellIndex) => {
-        if (rowIndex === toRow && cellIndex === toCell) { 
-        
-       const foundImage = images.allImages.find(image => cell === image.id)  
+        if (rowIndex === toRow && cellIndex === toCell) {   
+
+        const foundImage = images.allImages.find(image => cell === image.id)  
         this.props.selectImages(foundImage) 
-        }
+
+        return cell
+
+      }
         else return cell
       })
     )
