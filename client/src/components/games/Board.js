@@ -2,16 +2,18 @@ import React from 'react'
 import './Board.css'
 
 
-
 const renderCel = (makeMove, rowIndex, cellIndex, cell, hasTurn, images) => {
   return (
     <div
-      className="board-tile"
+      className="card" 
       disabled={hasTurn}
       onClick={() => makeMove(rowIndex, cellIndex)}
-      key={`${rowIndex}-${cellIndex}`}
-    >
-      <img src={images.find(image => image.id===cell).url}/>
+      key={`${rowIndex}-${cellIndex}`}>
+        <div className="board-tile-front">
+        </div>
+        <div className="board-tile-back">
+          <img src={images.find(image => image.id===cell).url}/>
+        </div>
     </div>
   )
 }
