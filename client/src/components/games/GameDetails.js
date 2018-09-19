@@ -34,17 +34,12 @@ class GameDetails extends PureComponent {
     const board = game.board.map(
       (row, rowIndex) => row.map((cell, cellIndex) => {
         if (rowIndex === toRow && cellIndex === toCell) {   
-
-        const foundImage = images.allImages.find(image => cell === image.id)  
-        this.props.selectImages(foundImage) 
-
+          const foundImage = images.allImages.find(image => cell === image.id)  
+          this.props.selectImages(foundImage) 
         return cell
-
-      }
+        }
         else return cell
-      })
-    )
-
+      }))     
     updateGame(game.id, board)
   }
 

@@ -3,7 +3,7 @@ import User from '../users/entity'
 //import {Emoji} from '../emojis/entity';
 
 export type Symbol= "x" | "o"
-export type Row = Number[]
+export type Row = Number[] | null[]
 export type Board = [ Row, Row, Row ]
 
 type Status = 'pending' | 'started' | 'finished'
@@ -15,10 +15,15 @@ const starterBoard = emojis.concat(emojis)
 
 const randomizedBoard = starterBoard.sort(() => 0.5 - Math.random())
 
-const emptyRow1: Row = [randomizedBoard[0], randomizedBoard[1], randomizedBoard[2], randomizedBoard[3]]
-const emptyRow2: Row = [randomizedBoard[4], randomizedBoard[5], randomizedBoard[6], randomizedBoard[7]]
-const emptyRow3: Row = [randomizedBoard[8], randomizedBoard[9], randomizedBoard[10], randomizedBoard[11]]
+const emptyRow1: Row = [null, null, null]
+const emptyRow2: Row = [null, null, null]
+const emptyRow3: Row = [null, null, null]
 const emptyBoard: Board = [ emptyRow1, emptyRow2, emptyRow3 ]
+
+const hiddenRow1: Row = [randomizedBoard[0], randomizedBoard[1], randomizedBoard[2], randomizedBoard[3]]
+const hiddenRow2: Row = [randomizedBoard[4], randomizedBoard[5], randomizedBoard[6], randomizedBoard[7]]
+const hiddenRow3: Row = [randomizedBoard[8], randomizedBoard[9], randomizedBoard[10], randomizedBoard[11]]
+const hiddenBoard: Board = [ hiddenRow1, hiddenRow2, hiddenRow3 ]
 
 @Entity()
 export class Game extends BaseEntity {
@@ -28,6 +33,9 @@ export class Game extends BaseEntity {
 
   @Column('json', {default: emptyBoard})
   board: Board
+
+  @Column ('json', {default: hiddenBoard})
+  hiddenboard: Board
 
   @Column('char', {length:1, default: 'x'})
   turn: Symbol
