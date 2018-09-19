@@ -1,4 +1,4 @@
-import {GET_IMAGES} from '../actions/images'
+import {GET_IMAGES, SELECT_IMAGES } from '../actions/images'
 
 const inititalState = {allImages: null, selectedImages:[]}
 
@@ -8,6 +8,10 @@ export default function reducer (state = inititalState, action = {}) {
       return {...state,
         allImages: [...state.allImages = action.payload]
       }
+    case SELECT_IMAGES:
+      return { ...state, 
+        selectedImages: [...state.selectedImages, action.payload ]
+        }
 		default:
       return state
 	}

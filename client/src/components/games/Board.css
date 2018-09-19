@@ -25,3 +25,7 @@ img {
   margin-right: auto;
   /* visibility: hidden; */
 }
+
+.bla {
+  border: 1px solid black;
+}

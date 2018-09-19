@@ -21,7 +21,7 @@ export default function renderBoard ({board, makeMove, images}){
   <div className="board-wrapper">
     {board.map((rows, rowIndex) =>
      <div key={rowIndex} className="row-wrapper">
-    {rows.map((cell, cellIndex) => renderCel(makeMove, rowIndex, cellIndex,cell,false, images))}
+    {rows.map((cell, cellIndex) => renderCel(makeMove, rowIndex, cellIndex, cell, false, images))}
     </div> )}
   </div>
 ) }
