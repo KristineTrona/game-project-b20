@@ -2,23 +2,26 @@ import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, Index, OneToMany, M
 import User from '../users/entity'
 //import {Emoji} from '../emojis/entity';
 
+// export type CorrectMove = (string|number|null)[]
 export type Symbol= "x" | "o"
-export type Row = Number[]
-export type Board = [ Row, Row, Row ]
-
+export type Row = Array<number|null|string> 
+export type Board = Array<Row>
 type Status = 'pending' | 'started' | 'finished'
 
 
-const emojis = [1,2,3,4,5,6]
+const images = [1,2,3,4,5,6]
 
-const starterBoard = emojis.concat(emojis)
+const starterBoard = images.concat(images)
 
 const randomizedBoard = starterBoard.sort(() => 0.5 - Math.random())
 
-const emptyRow1: Row = [randomizedBoard[0], randomizedBoard[1], randomizedBoard[2], randomizedBoard[3]]
-const emptyRow2: Row = [randomizedBoard[4], randomizedBoard[5], randomizedBoard[6], randomizedBoard[7]]
-const emptyRow3: Row = [randomizedBoard[8], randomizedBoard[9], randomizedBoard[10], randomizedBoard[11]]
-const emptyBoard: Board = [ emptyRow1, emptyRow2, emptyRow3 ]
+const emptyRow: Row = [null, null, null, null]
+const emptyBoard: Board = [ emptyRow, emptyRow, emptyRow ]
+
+const hiddenRow1: Row = [randomizedBoard[0], randomizedBoard[1], randomizedBoard[2], randomizedBoard[3]]
+const hiddenRow2: Row = [randomizedBoard[4], randomizedBoard[5], randomizedBoard[6], randomizedBoard[7]]
+const hiddenRow3: Row = [randomizedBoard[8], randomizedBoard[9], randomizedBoard[10], randomizedBoard[11]]
+const hiddenBoard: Board = [ hiddenRow1, hiddenRow2, hiddenRow3 ]
 
 @Entity()
 export class Game extends BaseEntity {
@@ -28,6 +31,9 @@ export class Game extends BaseEntity {
 
   @Column('json', {default: emptyBoard})
   board: Board
+
+  @Column ('json', {default: hiddenBoard})
+  hiddenboard: Board
 
   @Column('char', {length:1, default: 'x'})
   turn: Symbol

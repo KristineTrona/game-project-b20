@@ -22,40 +22,38 @@ class GameDetails extends PureComponent {
     this.props.getImages()
   }
 
+  componentDidUpdate(){
+
+  }
+
+
   joinGame = () => this.props.joinGame(this.props.game.id)
 
   makeMove = (toRow, toCell) => {
-    const {game, updateGame, images} = this.props
-    //THIS PART NEEDS WORK:
+
+    const {game, updateGame, images} = this.props  
+
+    // const card = document.getElementById(`${toRow}-${toCell}`)
+    // card.className = "board-tile-back-selected"
     
     const board = game.board.map(
       (row, rowIndex) => row.map((cell, cellIndex) => {
-        if (rowIndex === toRow && cellIndex === toCell) { 
-        console.log(rowIndex, toRow, cellIndex, toCell, cell) 
-        
-       const foundImage = images.allImages.find(image => cell === image.id)  
-        console.log(foundImage)
-        this.props.selectImages(foundImage) 
+        if (rowIndex === toRow && cellIndex === toCell) {
+  
+          // const foundImage = images.allImages.find(image => cell === image.id)  
+          // this.props.selectImages(foundImage) 
+
+          const row = game.hiddenboard[toRow]
+
+          return row[toCell]
         }
         else return cell
-      })
-    )
+      }))
 
-
-    // handleClickYesEvent = () => {
-    //   if(this.props.images.images.length-1===this.props.images.images.findIndex(x => x.id ===this.props.images.selectedImage.id)){
-    //     this.changeLastImage()
-    //   } else{
-    //   const currentIndex = this.props.images.images.findIndex(x => x.id ===this.props.images.selectedImage.id)
-    //   this.props.nextItem(this.props.images.images, currentIndex )
-    //    this.appearing()
-    //     }
-    //   }
-    //const board = event.target.className
-    
-    
     updateGame(game.id, board)
   }
+
+  
 
 
 
