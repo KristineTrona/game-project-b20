@@ -14,6 +14,8 @@
   border: 1px black solid;
   position: relative;
   display: inline-block;
+  min-width: 50px;
+  min-height: 50px;
 }
 
 .card > .board-tile-front{

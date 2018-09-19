@@ -9,16 +9,14 @@ export type Board = [ Row, Row, Row ]
 type Status = 'pending' | 'started' | 'finished'
 
 
-const emojis = [1,2,3,4,5,6]
+const images = [1,2,3,4,5,6]
 
-const starterBoard = emojis.concat(emojis)
+const starterBoard = images.concat(images)
 
 const randomizedBoard = starterBoard.sort(() => 0.5 - Math.random())
 
-const emptyRow1: Row = [null, null, null]
-const emptyRow2: Row = [null, null, null]
-const emptyRow3: Row = [null, null, null]
-const emptyBoard: Board = [ emptyRow1, emptyRow2, emptyRow3 ]
+const emptyRow: Row = [null, null, null, null]
+const emptyBoard: Board = [ emptyRow, emptyRow, emptyRow ]
 
 const hiddenRow1: Row = [randomizedBoard[0], randomizedBoard[1], randomizedBoard[2], randomizedBoard[3]]
 const hiddenRow2: Row = [randomizedBoard[4], randomizedBoard[5], randomizedBoard[6], randomizedBoard[7]]
