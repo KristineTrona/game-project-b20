@@ -10,10 +10,42 @@
   grid-column-gap: 10px;
 }
 
-.board-tile {
+.card{
   border: 1px black solid;
-  display: inline-block;
+  /* display: inline-block; */
 }
+
+.card > .board-tile-front{
+  position: absolute;
+  -webkit-transform: perspective(600px) rotateY(0deg);
+  transform: perspective(600px) rotateY(0deg);
+  -webkit-backface-visibility:  hidden;
+  color: yellow;
+  backface-visibility:  hidden;
+  transition: transform .5s linear 0s;
+  transition: -webkit-transform .5s linear 0s;
+}
+
+.card > .board-tile-back{
+  position: relative;
+  -webkit-transform: perspective(600px) rotateY(180deg);
+  transform: perspective(600px) rotateY(180deg);
+  background: blue;
+  -webkit-backface-visibility:  hidden;
+  backface-visibility:  hidden;
+  transition: transform .5s linear 0s;
+  transition: -webkit-transform .5s linear 0s;
+}
+
+/* .card:active> .board-tile-front{
+  -webkit-transform: perspective(600px) rotateY(-180deg);
+  transform: perspective(600px) rotateY(-180deg);
+}
+
+.card:active > .board-tile-back{
+  -webkit-transform: perspective(600px) rotateY(0deg);
+  transform: perspective(600px) rotateY(0deg);
+} */
 
 img {
   width: 70%;
