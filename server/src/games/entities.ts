@@ -15,7 +15,11 @@ const starterBoard = images.concat(images)
 
 const randomizedBoard = starterBoard.sort(() => 0.5 - Math.random())
 
+<<<<<<< HEAD
 const emptyRow: Row = [null, null, null]
+=======
+const emptyRow: Row = [null, null, null, null]
+>>>>>>> 963e8ba367c6aa7d18ee450dbd4d8e08188c4ef0
 const emptyBoard: Board = [ emptyRow, emptyRow, emptyRow ]
 
 const hiddenRow1: Row = [randomizedBoard[0], randomizedBoard[1], randomizedBoard[2], randomizedBoard[3]]

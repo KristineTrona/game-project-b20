@@ -41,7 +41,10 @@ class GameDetails extends PureComponent {
 
           const foundImage = images.allImages.find(image => cell === image.id)  
           this.props.selectImages(foundImage) 
-        return cell
+        
+          const row = game.hiddenboard[toRow]
+          cell = row[toCell]
+          return cell
         }
         else return cell
       }))     

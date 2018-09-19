@@ -3,7 +3,6 @@ import './Board.css'
 
 
 const renderCel = (makeMove, rowIndex, cellIndex, cell, hasTurn, images) => {
-  
   if(cell=== null){
     return(
     <div
@@ -12,7 +11,10 @@ const renderCel = (makeMove, rowIndex, cellIndex, cell, hasTurn, images) => {
       disabled={hasTurn}
       onClick={() => makeMove(rowIndex, cellIndex)}
       key={`${rowIndex}-${cellIndex}`}>
+<<<<<<< HEAD
       Hello
+=======
+>>>>>>> 963e8ba367c6aa7d18ee450dbd4d8e08188c4ef0
     </div>)
   } else return (
     <div
