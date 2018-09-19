@@ -104,12 +104,12 @@ export default class GameController {
     //   game.status = 'finished'
     // }
     else {
-      const selectedImages = await update.board.map(row => row.filter(cell => cell !== null))
+      const selectedImages = await update.board.map(row => row.filter(cell => cell !== null && cell!==""))
     
-      const imagesArray = [].concat.apply([], selectedImages)
+      let imagesArray = [].concat.apply([], selectedImages)
 
       if(imagesArray.length ===2 && imagesArray[0] === imagesArray[1]){
-        //Make updated board cell be equal to ""
+        //Make updated board cell be equal to "" - makes the div to be hidden
         
         const correctMove = update.board.map(row => row.map(cell => {
           if(cell === imagesArray[0]){
@@ -120,11 +120,26 @@ export default class GameController {
           }
         }))
         update.board = correctMove
+        player.score += 10
+        console.log(imagesArray)
       }
-      else{
+      else if(imagesArray.length===2 && imagesArray[0] !== imagesArray[1]){
+        const wrongMove = update.board.map(row => row.map(cell => {
+          if(cell === imagesArray[0] || cell===imagesArray[1]){
+            return null
+          }
+          else {
+            return cell
+          }
+        }))
+        update.board = wrongMove
         game.turn = (player.symbol === 'x' && imagesArray.length ===2) ? 'o' : 'x'
-        // make update.board cells turn back to null with some latency
       }
+      // else{
+      //   game.turn = (player.symbol === 'x' && imagesArray.length ===2) ? 'o' : 'x'
+      //   console.log(imagesArray)
+      //   // make update.board cells turn back to null with some latency
+      // }
     }
 
     game.board = update.board
