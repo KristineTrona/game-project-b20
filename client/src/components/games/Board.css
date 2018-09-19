@@ -1,14 +1,29 @@
+.board-wrapper{
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-row-gap: 10px;
+}
+
+.row-wrapper{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-column-gap: 10px;
+}
+
 .board-tile {
-  height: 50px;
-  width: 50px;
   border: 1px black solid;
   display: inline-block;
 }
 
 img {
-  width: 50%;
-  height: 50%;
-  visibility: hidden;
+  width: 70%;
+  height: 70%;
+  display: block;
+  position: relative;
+  margin-top: 15%;
+  margin-left: auto;
+  margin-right: auto;
+  /* visibility: hidden; */
 }
 
 .bla {

@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
-import {getGames, joinGame, updateGame} from '../../actions/games'
-import {getImages} from '../../actions/images'
+import {getGames, joinGame, updateGame } from '../../actions/games'
+import {getImages, selectImages} from '../../actions/images'
 import {getUsers} from '../../actions/users'
 import {userId} from '../../jwt'
 import Paper from 'material-ui/Paper'
@@ -25,14 +25,34 @@ class GameDetails extends PureComponent {
   joinGame = () => this.props.joinGame(this.props.game.id)
 
   makeMove = (toRow, toCell) => {
-    const {game, updateGame} = this.props
-
+    const {game, updateGame, images} = this.props
+    //THIS PART NEEDS WORK:
+    
     const board = game.board.map(
       (row, rowIndex) => row.map((cell, cellIndex) => {
-        if (rowIndex === toRow && cellIndex === toCell) return game.turn
+        if (rowIndex === toRow && cellIndex === toCell) { 
+        console.log(rowIndex, toRow, cellIndex, toCell, cell) 
+        
+       const foundImage = images.allImages.find(image => cell === image.id)  
+        console.log(foundImage)
+        this.props.selectImages(foundImage) 
+        }
         else return cell
       })
     )
+
+
+    // handleClickYesEvent = () => {
+    //   if(this.props.images.images.length-1===this.props.images.images.findIndex(x => x.id ===this.props.images.selectedImage.id)){
+    //     this.changeLastImage()
+    //   } else{
+    //   const currentIndex = this.props.images.images.findIndex(x => x.id ===this.props.images.selectedImage.id)
+    //   this.props.nextItem(this.props.images.images, currentIndex )
+    //    this.appearing()
+    //     }
+    //   }
+    //const board = event.target.className
+    
     
     updateGame(game.id, board)
   }
@@ -81,7 +101,7 @@ class GameDetails extends PureComponent {
 
       {
         game.status !== 'pending' &&
-        <Board board={game.board} makeMove={this.makeMove} images={images}/>
+        <Board board={game.board} makeMove={this.makeMove} images={images.allImages}/>
       }
     </Paper>)
   }
@@ -96,7 +116,7 @@ const mapStateToProps = (state, props) => ({
 })
 
 const mapDispatchToProps = {
-  getGames, getUsers, joinGame, updateGame, getImages
+  getGames, getUsers, joinGame, updateGame, getImages, selectImages
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameDetails)
