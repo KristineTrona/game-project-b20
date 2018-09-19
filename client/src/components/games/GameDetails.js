@@ -28,10 +28,9 @@ class GameDetails extends PureComponent {
   makeMove = (toRow, toCell) => {
     const {game, updateGame, images} = this.props  
 
-    const card = document.getElementById(`${toRow}-${toCell}`)
-    card.className = "board-tile-back-selected"
+    // const card = document.getElementById(`${toRow}-${toCell}`)
+    // card.className = "board-tile-back-selected"
 
-    console.log(game.hiddenboard)
 
     
     const board = game.board.map(
@@ -43,11 +42,12 @@ class GameDetails extends PureComponent {
           this.props.selectImages(foundImage) 
         
           const row = game.hiddenboard[toRow]
-          cell = row[toCell]
-          return cell
+          const hiddenCell = row[toCell]
+          return hiddenCell
         }
         else return cell
-      }))     
+      }))
+      console.log(board, game.id)     
     updateGame(game.id, board)
   }
 
