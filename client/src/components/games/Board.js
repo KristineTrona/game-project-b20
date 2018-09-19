@@ -5,15 +5,15 @@ import './Board.css'
 const renderCel = (makeMove, rowIndex, cellIndex, cell, hasTurn, images) => {
   
   if(cell=== null){
-    return 
+    return(
     <div
       className="card"
       id={`${rowIndex}-${cellIndex}`}
       disabled={hasTurn}
       onClick={() => makeMove(rowIndex, cellIndex)}
       key={`${rowIndex}-${cellIndex}`}>
-      Test
-    </div>
+      Hello
+    </div>)
   } else return (
     <div
       className="card"

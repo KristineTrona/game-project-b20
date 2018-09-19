@@ -30,10 +30,15 @@ class GameDetails extends PureComponent {
 
     const card = document.getElementById(`${toRow}-${toCell}`)
     card.className = "board-tile-back-selected"
+
+    console.log(game.hiddenboard)
+
     
     const board = game.board.map(
       (row, rowIndex) => row.map((cell, cellIndex) => {
-        if (rowIndex === toRow && cellIndex === toCell) {   
+        if (rowIndex === toRow && cellIndex === toCell) {
+          
+
           const foundImage = images.allImages.find(image => cell === image.id)  
           this.props.selectImages(foundImage) 
         return cell
