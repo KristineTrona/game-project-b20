@@ -1,6 +1,8 @@
 .game-wrapper{
-  background-image: url("https://thumbs.dreamstime.com/b/floral-mosaic-tiles-seamless-pattern-background-vector-flower-decor-elements-31416512.jpg");
-  background-size: 70%;
+  background-image: url("https://images.pexels.com/photos/40799/paper-colorful-color-loose-40799.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+  /* background-image: url("https://thumbs.dreamstime.com/b/floral-mosaic-tiles-seamless-pattern-background-vector-flower-decor-elements-31416512.jpg");
+  background-size: 70%; */
+  background-repeat: no-repeat;
 }
 
 
@@ -17,8 +19,9 @@
   padding: 20px;
 }
 
-.board-wrapper{
+.gameboard-wrapper{
   width: 80%;
+  height: 100vh;
   padding: 20px;
   margin-left: auto;
   margin-right: auto;

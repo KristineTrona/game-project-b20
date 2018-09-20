@@ -22,7 +22,7 @@ const renderCel = (makeMove, rowIndex, cellIndex, cell, hasTurn, images, classNa
         }
 
         {cell!== null && cell !== "" && 
-        <div className={`card ${className}`}>
+        <div className={`card`}>
         <div
           className="card-back"
           id={`${rowIndex}-${cellIndex}`}

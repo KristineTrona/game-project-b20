@@ -42,7 +42,6 @@ state = {
     }
   }
 
-
   joinGame = () => this.props.joinGame(this.props.game.id)
 
   makeMove = async (toRow, toCell) => {
@@ -105,56 +104,61 @@ state = {
       .filter(p => p.symbol === game.winner)
       .map(p => p.userId)[0]
 
-    return (
-     <div>
-    <Paper className="outer-paper">
-      <h1>Game #{game.id}</h1>
+return (
+  <div className = "game-wrapper">
+   <div className="paper-wrapper">
+    <Paper className="left-paper">
+      <h3>Game #{game.id}</h3>
 
       <p>Status: {game.status}</p>
 
       {
         game.status === 'started' &&
         player && player.symbol === game.turn &&
-        <div>It's your turn!</div>
+        <div className="your-turn">It's your turn!</div>
       }
-
       {
         game.status === 'pending' &&
         game.players.map(p => p.userId).indexOf(userId) === -1 &&
         <button onClick={this.joinGame}>Join Game</button>
       }
-
       {
         winner &&
         <p>Winner: {users[winner].firstName}</p>
       }
-
-      <hr />
-
+    </Paper>
+    <Paper className="right-paper">
+      <h3> Score: </h3>
+      <p>  {this.findUserX()}: {game.scoreX} points </p>
+      <p> {this.findUserO()}: {game.scoreO} points </p>
+    </Paper>
+    </div>
+    <div className="gameboard-wrapper">
       {
-        game.status !== 'pending' &&
+        game.status === 'started' &&
         <div>
         <Board board={game.board} makeMove={this.makeMove} images={images.allImages} className={ this.state.condition ? "is-flipped" : "" }/>
-        <p> Score: </p>
-        <p> Player 1: {game.scoreX}</p>
-        <p> Player 2: {game.scoreO}</p>
+        </div>
+      } 
+      {
+        game.status === 'finished' &&
+        <div className = "winner-div">
+          <h4>The winner is: </h4>
+          <h1>{game.winner === "o" ? this.findUserO() : this.findUserX() } </h1>
         </div>
       }
-    </Paper>
-    </div>)
-  }
+    </div>
+  </div>)
 }
-
+}
 const mapStateToProps = (state, props) => ({
-  authenticated: state.currentUser !== null,
-  userId: state.currentUser && userId(state.currentUser.jwt),
-  game: state.games && state.games[props.match.params.id],
-  users: state.users,
-  images: state.images
+authenticated: state.currentUser !== null,
+userId: state.currentUser && userId(state.currentUser.jwt),
+game: state.games && state.games[props.match.params.id],
+users: state.users,
+images: state.images
 })
-
 const mapDispatchToProps = {
-  getGames, getUsers, joinGame, updateGame, getImages, selectImages
+getGames, getUsers, joinGame, updateGame, getImages, selectImages
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(GameDetails)
