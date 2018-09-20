@@ -39,7 +39,7 @@ export class Game extends BaseEntity {
   turn: Symbol
 
   @Column('char', {length:1, nullable: true})
-  winner: Symbol
+  winner: Symbol | string
 
   @Column('text', {default: 'pending'})
   status: Status

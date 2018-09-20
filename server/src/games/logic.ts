@@ -1,7 +1,6 @@
 import { ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator'
-import { Board} from './entities'
-//Row, Symbol 
-
+import { Board,Row } from './entities'
+//Symbol
 
 @ValidatorConstraint()
 export class IsBoard implements ValidatorConstraintInterface {
@@ -17,8 +16,8 @@ export class IsBoard implements ValidatorConstraintInterface {
 }
 
 // export const isValidTransition = (playerSymbol: Symbol, from: Board, to: Board) => {
-//   const changes = 
-//     from.map(
+//   const changes = from
+//     .map(
 //       (row, rowIndex) => row.map((symbol, columnIndex) => ({
 //         from: symbol, 
 //         to: to[rowIndex][columnIndex]
@@ -27,43 +26,44 @@ export class IsBoard implements ValidatorConstraintInterface {
 //     .reduce((a,b) => a.concat(b))
 //     .filter(change => change.from !== change.to)
 
-//   return changes.length === 2 && 
+//   return changes.length === 1 && 
 //     changes[0].to === playerSymbol && 
 //     changes[0].from === null
 // }
 
+export const calculateWinner = (finished, scoreX, scoreO): string | null => {
+  if(finished === true && scoreX > scoreO){
+    return "x"
+  }
+  else if(finished === true && scoreX < scoreO){
+    return "o"
+  }
+  else if(finished === true && scoreX === scoreO)
+    return "It's a draw!"
+  else{
+    return null
+  }
+}
 
-// export const isValidTransition = () => {
-
-//     const moves = (board1, board2) => 
-//     board1
-//     .map((row, y) => row.filter((cell, x) => board2[y][x] !== cell))
-//     .reduce((a, b) => a.concat(b))
-//     .length
-
-//   return true
-// }
+export const finished = (board: Board) : boolean=>
+  board
+    .reduce((a,b) => a.concat(b) as Row)
+    .every(symbol => symbol === "")
 
 
-
-// export const calculateWinner = (board: Board): Symbol | null =>
-//   board
-//     .concat(
-//       // vertical winner
-//       [0, 1, 2].map(n => board.map(row => row[n])) as Row[]
-//     )
-//     .concat(
-//       [
-//         // diagonal winner ltr
-//         [0, 1, 2].map(n => board[n][n]),
-//         // diagonal winner rtl
-//         [0, 1, 2].map(n => board[2-n][n])
-//       ] as Row[]
-//     )
-//     .filter(row => row[0] && row.every(symbol => symbol === row[0]))
-//     .map(row => row[0])[0] || null
-
-// export const finished = (board: Board): boolean =>
-//   board
-//     .reduce((a,b) => a.concat(b) as Row)
-//     .every(symbol => symbol !== null)
+  //   export const calculateWinner = (board: Board): Symbol | null =>
+  //   board
+  //     .concat(
+  //       // vertical winner
+  //       [0, 1, 2].map(n => board.map(row => row[n])) as Row[]
+  //     )
+  //     .concat(
+  //       [
+  //         // diagonal winner ltr
+  //         [0, 1, 2].map(n => board[n][n]),
+  //         // diagonal winner rtl
+  //         [0, 1, 2].map(n => board[2-n][n])
+  //       ] as Row[]
+  //     )
+  //     .filter(row => row[0] && row.every(symbol => symbol === row[0]))
+  //     .map(row => row[0])[0] || null
