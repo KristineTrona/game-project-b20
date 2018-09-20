@@ -121,13 +121,10 @@ export default class GameController {
             return cell
           }
         }))
-
-        // const updateBoard = () => update.board = correctMove
-        // sleep(2000).then(() => updateBoard())
-
-        sleep(3000).then(() => console.log("hello"))
-
-        update.board = correctMove
+        
+        await sleep(2000);
+        update.board = correctMove;
+      
 
         player.symbol === 'x' ? game.scoreX += 10 : game.scoreO +=10
 
@@ -154,7 +151,7 @@ export default class GameController {
       type: 'UPDATE_GAME',
       payload: game
     })
-
+    
     return game
   }
 
