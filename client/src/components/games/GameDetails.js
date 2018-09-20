@@ -22,7 +22,18 @@ class GameDetails extends PureComponent {
     this.props.getImages()
   }
 
+  findUserX = () =>{
+    const playerX = this.props.game.players.find(player => player.symbol === "x")
+    const userX = playerX.userId
 
+    return Object.values(this.props.users).find(user => user.id===userX).firstName
+  }
+
+  findUserO = () =>{
+    const playerO = this.props.game.players.find(player => player.symbol === "o")
+    const userO= playerO.userId
+    return Object.values(this.props.users).find(user => user.id===userO).firstName
+  }
 
   joinGame = () => this.props.joinGame(this.props.game.id)
 
@@ -48,10 +59,10 @@ class GameDetails extends PureComponent {
       }))
 
     updateGame(game.id, board)
+
+      //console.log(Object.values(this.props.users))
   }
-
   
-
   render() {
     const {game, images, users, authenticated, userId} = this.props
 
@@ -94,13 +105,15 @@ class GameDetails extends PureComponent {
 
       <hr />
 
+      {/* {this.findUserX()} */}
+
       {
         game.status !== 'pending' &&
         <div>
         <Board board={game.board} makeMove={this.makeMove} images={images.allImages}/>
         <p> Score: </p>
-        <p> Player 1: {game.scoreX}</p>
-        <p> Player 2: {game.scoreO}</p>
+        <p>  {this.findUserX()}: {game.scoreX} points </p>
+        <p> {this.findUserO()}: {game.scoreO} points </p>
         </div>
       }
     </Paper>
