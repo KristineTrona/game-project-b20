@@ -96,14 +96,20 @@ export default class GameController {
     //   throw new BadRequestError(`Invalid move`)
     // }    
 
-    const winner = calculateWinner(finished, game.scoreX, game.scoreO)
+    // const result = finished(update.board)
+    // console.log(result)
+    // console.log(update.board)
 
-    if (winner) {
-      game.winner = winner
-      game.status = 'finished'
-    }
-
-
+    // const winner = calculateWinner(result, game.scoreX, game.scoreO)
+      
+    // if (winner) {
+    //   game.winner = winner
+    //   game.status = 'finished'
+    // }
+    // else if (finished(update.board)) {
+    //   game.status = 'finished'
+    // }
+    
     else {
       const selectedImages = await update.board.map(row => row.filter(cell => cell !== null && cell!==""))
     
@@ -131,9 +137,20 @@ export default class GameController {
 
         await sleep(1000);
         update.board = correctMove; 
-        
+
         player.symbol === 'x' ? game.scoreX += 10 : game.scoreO +=10
 
+        const result = finished(update.board)
+
+        const winner = calculateWinner(result, game.scoreX, game.scoreO)
+        
+          if (winner) {
+            game.winner = winner
+            game.status = 'finished'
+          }
+          else if (finished(update.board)) {
+            game.status = 'finished'
+          }
       }
       else if(imagesArray.length===2 && imagesArray[0] !== imagesArray[1]){
         const wrongMove = update.board.map(row => row.map(cell => {
@@ -159,6 +176,7 @@ export default class GameController {
         game.turn = (player.symbol === 'x' && imagesArray.length ===2) ? 'o' : 'x'
       }
     }
+    
 
     game.board = update.board
   

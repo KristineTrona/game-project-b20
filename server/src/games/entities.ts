@@ -76,6 +76,4 @@ export class Player extends BaseEntity {
   @Column('char', {length: 1})
   symbol: Symbol
 
-  @Column({default: 0})
-  score: number
 }

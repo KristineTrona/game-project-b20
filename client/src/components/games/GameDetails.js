@@ -24,7 +24,18 @@ state = {
     this.props.getImages()
   }
 
+  findUserX = () =>{
+    const playerX = this.props.game.players.find(player => player.symbol === "x")
+    const userX = playerX.userId
 
+    return Object.values(this.props.users).find(user => user.id===userX).firstName
+  }
+
+  findUserO = () =>{
+    const playerO = this.props.game.players.find(player => player.symbol === "o")
+    const userO= playerO.userId
+    return Object.values(this.props.users).find(user => user.id===userO).firstName
+  }
 
   joinGame = () => this.props.joinGame(this.props.game.id)
 
@@ -54,8 +65,6 @@ state = {
       }))
 
     updateGame(game.id, board)
-  }
-
 
   render() {
     const {game, images, users, authenticated, userId} = this.props
@@ -74,41 +83,53 @@ state = {
       .map(p => p.userId)[0]
 
     return (
-     <div>
-    <Paper className="outer-paper">
-      <h1>Game #{game.id}</h1>
+    <div className = "game-wrapper">
+     <div className="paper-wrapper">
+      <Paper className="left-paper">
+        <h3>Game #{game.id}</h3>
 
-      <p>Status: {game.status}</p>
+        <p>Status: {game.status}</p>
 
-      {
-        game.status === 'started' &&
-        player && player.symbol === game.turn &&
-        <div>It's your turn!</div>
-      }
+        {
+          game.status === 'started' &&
+          player && player.symbol === game.turn &&
+          <div className="your-turn">It's your turn!</div>
+        }
 
-      {
-        game.status === 'pending' &&
-        game.players.map(p => p.userId).indexOf(userId) === -1 &&
-        <button onClick={this.joinGame}>Join Game</button>
-      }
+        {
+          game.status === 'pending' &&
+          game.players.map(p => p.userId).indexOf(userId) === -1 &&
+          <button onClick={this.joinGame}>Join Game</button>
+        }
 
-      {
-        winner &&
-        <p>Winner: {users[winner].firstName}</p>
-      }
+        {
+          winner &&
+          <p>Winner: {users[winner].firstName}</p>
+        }
+      </Paper>
+      <Paper className="right-paper">
+        <h3> Score: </h3>
+        <p>  {this.findUserX()}: {game.scoreX} points </p>
+        <p> {this.findUserO()}: {game.scoreO} points </p>
+      </Paper>
+      </div>
+      <div className="board-wrapper">
+        {
+          game.status === 'started' &&
+          <div>
+          <Board board={game.board} makeMove={this.makeMove} images={images.allImages}/>
+          </div>
 
-      <hr />
+        } 
 
-      {
-        game.status !== 'pending' &&
-        <div>
-        <Board board={game.board} makeMove={this.makeMove} images={images.allImages} className={ this.state.condition ? "is-flipped" : "" }/>
-        <p> Score: </p>
-        <p> Player 1: {game.scoreX}</p>
-        <p> Player 2: {game.scoreO}</p>
-        </div>
-      }
-    </Paper>
+        {
+          game.status === 'finished' &&
+          <div className = "winner-div">
+            <h4>The winner is: </h4>
+            <h1>{game.winner === "o" ? this.findUserO() : this.findUserX() } </h1>
+          </div>
+        }
+      </div>
     </div>)
   }
 }
