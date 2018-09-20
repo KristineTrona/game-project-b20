@@ -4,7 +4,7 @@ import User from '../users/entity'
 
 export type Symbol= "x" | "o"
 export type Row = Number[] | null[]
-export type Board = [ Row, Row, Row ]
+export type Board = Array<Row>
 
 type Status = 'pending' | 'started' | 'finished'
 

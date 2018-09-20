@@ -30,26 +30,25 @@ class GameDetails extends PureComponent {
 
     // const card = document.getElementById(`${toRow}-${toCell}`)
     // card.className = "board-tile-back-selected"
-
-
     
     const board = game.board.map(
       (row, rowIndex) => row.map((cell, cellIndex) => {
         if (rowIndex === toRow && cellIndex === toCell) {
-          
-
-          const foundImage = images.allImages.find(image => cell === image.id)  
-          this.props.selectImages(foundImage) 
+  
+          // const foundImage = images.allImages.find(image => cell === image.id)  
+          // this.props.selectImages(foundImage) 
         
           const row = game.hiddenboard[toRow]
-          const hiddenCell = row[toCell]
-          return hiddenCell
+
+          return row[toCell]
         }
         else return cell
       }))
-      console.log(board, game.id)     
+
     updateGame(game.id, board)
   }
+
+  
 
 
 

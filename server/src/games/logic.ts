@@ -1,7 +1,6 @@
 import { ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator'
-import { Board, Symbol } from './entities'
-//Row, Symbol 
-
+import { Board } from './entities'
+//Symbol, Row
 
 @ValidatorConstraint()
 export class IsBoard implements ValidatorConstraintInterface {
@@ -16,38 +15,21 @@ export class IsBoard implements ValidatorConstraintInterface {
   }
 }
 
-export const isValidTransition = (playerSymbol: Symbol, from: Board, to: Board) => {
-  const changes = 
-    from.map(
-      (row, rowIndex) => row.map((image, columnIndex) => ({
-        from: image, 
-        to: to[rowIndex][columnIndex]
-      }))
-    )
-    .reduce((a,b) => a.concat(b))
-    .filter(change => change.from !== change.to)
+// export const isValidTransition = (playerSymbol: Symbol, from: Board, to: Board) => {
+//   const changes = from
+//     .map(
+//       (row, rowIndex) => row.map((symbol, columnIndex) => ({
+//         from: symbol, 
+//         to: to[rowIndex][columnIndex]
+//       }))
+//     )
+//     .reduce((a,b) => a.concat(b))
+//     .filter(change => change.from !== change.to)
 
-  console.log(changes)
-  
-
-  return changes.length === 2 && 
-    changes[0].to === playerSymbol && 
-    changes[0].from === null
-}
-
-
-// export const isValidTransition = () => {
-
-//     const moves = (board1, board2) => 
-//     board1
-//     .map((row, y) => row.filter((cell, x) => board2[y][x] !== cell))
-//     .reduce((a, b) => a.concat(b))
-//     .length
-
-//   return true
+//   return changes.length === 1 && 
+//     changes[0].to === playerSymbol && 
+//     changes[0].from === null
 // }
-
-
 
 // export const calculateWinner = (board: Board): Symbol | null =>
 //   board

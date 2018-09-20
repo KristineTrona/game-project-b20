@@ -18,7 +18,7 @@
   min-height: 50px;
 }
 
-.card > .board-tile-front{
+/* .card > .board-tile-front{
   position: absolute;
   transform: perspective(600px) rotateY(0deg);
   color: yellow;
@@ -42,7 +42,7 @@
 
 .board-tile-back-selected{
   transform: perspective(600px) rotateY(0deg);
-}
+} */
 
 
 img {
