@@ -80,7 +80,7 @@ class GameDetails extends PureComponent {
       .map(p => p.userId)[0]
 
     return (
-    <div>
+    <div className = "game-wrapper">
      <div className="paper-wrapper">
       <Paper className="left-paper">
         <h3>Game #{game.id}</h3>
