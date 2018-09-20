@@ -55,8 +55,6 @@ class GameDetails extends PureComponent {
 
   
 
-
-
   render() {
     const {game, images, users, authenticated, userId} = this.props
 

@@ -121,7 +121,7 @@ export default class GameController {
             return cell
           }
         }))
-        
+
         await sleep(2000);
         update.board = correctMove;
       
@@ -138,13 +138,15 @@ export default class GameController {
             return cell
           }
         }))
-
+        
+        await sleep(2000);
         update.board = wrongMove
         game.turn = (player.symbol === 'x' && imagesArray.length ===2) ? 'o' : 'x'
       }
     }
 
     game.board = update.board
+  
     await game.save()
     
     io.emit('action', {
