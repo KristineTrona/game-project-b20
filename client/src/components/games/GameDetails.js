@@ -10,7 +10,9 @@ import Board from './Board'
 import './GameDetails.css'
 
 class GameDetails extends PureComponent {
-
+state = {
+  condition: false
+}
   componentWillMount() {
     if (this.props.authenticated) {
       if (this.props.game === null) this.props.getGames()
@@ -22,16 +24,17 @@ class GameDetails extends PureComponent {
     this.props.getImages()
   }
 
-  componentDidUpdate(){
-
-  }
 
 
   joinGame = () => this.props.joinGame(this.props.game.id)
 
   makeMove = (toRow, toCell) => {
 
-    const {game, updateGame, images} = this.props  
+    const {game, updateGame} = this.props  
+    
+    this.setState({
+      condition: !this.state.condition
+    })
 
     // const card = document.getElementById(`${toRow}-${toCell}`)
     // card.className = "board-tile-back-selected"
@@ -53,7 +56,6 @@ class GameDetails extends PureComponent {
     updateGame(game.id, board)
   }
 
-  
 
   render() {
     const {game, images, users, authenticated, userId} = this.props
@@ -100,7 +102,7 @@ class GameDetails extends PureComponent {
       {
         game.status !== 'pending' &&
         <div>
-        <Board board={game.board} makeMove={this.makeMove} images={images.allImages}/>
+        <Board board={game.board} makeMove={this.makeMove} images={images.allImages} className={ this.state.condition ? "is-flipped" : "" }/>
         <p> Score: </p>
         <p> Player 1: {game.scoreX}</p>
         <p> Player 2: {game.scoreO}</p>
