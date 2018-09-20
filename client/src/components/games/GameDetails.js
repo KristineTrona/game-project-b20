@@ -11,7 +11,7 @@ import './GameDetails.css'
 
 class GameDetails extends PureComponent {
 state = {
-  condition: false
+  condition: true
 }
   componentWillMount() {
     if (this.props.authenticated) {
@@ -28,13 +28,16 @@ state = {
 
   joinGame = () => this.props.joinGame(this.props.game.id)
 
-  makeMove = (toRow, toCell) => {
+  makeMove = async (toRow, toCell) => {
 
     const {game, updateGame} = this.props  
     
-    this.setState({
-      condition: !this.state.condition
-    })
+    // setTimeout(()=>{
+    //   this.setState({
+    //     condition: !this.state.condition
+    //   })
+    // }, 1000)
+
 
     // const card = document.getElementById(`${toRow}-${toCell}`)
     // card.className = "board-tile-back-selected"
@@ -53,11 +56,23 @@ state = {
         else return cell
       }))
 
-    updateGame(game.id, board)
+    await updateGame(game.id, board)
+
+    console.log('should flip??')
+
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (!this.props || !prevProps.game) return
+    if (prevProps.game!== this.props.game){
+      this.setState({
+        condition: !this.state.condition
+       })
+    }
+  }
 
   render() {
+    console.log(this.state)
     const {game, images, users, authenticated, userId} = this.props
 
     if (!authenticated) return (
