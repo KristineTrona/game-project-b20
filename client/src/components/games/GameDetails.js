@@ -10,7 +10,9 @@ import Board from './Board'
 import './GameDetails.css'
 
 class GameDetails extends PureComponent {
-
+state = {
+  condition: false
+}
   componentWillMount() {
     if (this.props.authenticated) {
       if (this.props.game === null) this.props.getGames()
@@ -40,6 +42,10 @@ class GameDetails extends PureComponent {
   makeMove = (toRow, toCell) => {
 
     const {game, updateGame} = this.props  
+    
+    this.setState({
+      condition: !this.state.condition
+    })
 
     // const card = document.getElementById(`${toRow}-${toCell}`)
     // card.className = "board-tile-back-selected"
@@ -60,9 +66,6 @@ class GameDetails extends PureComponent {
 
     updateGame(game.id, board)
 
-      //console.log(Object.values(this.props.users))
-  }
-  
   render() {
     const {game, images, users, authenticated, userId} = this.props
 
