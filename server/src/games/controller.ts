@@ -111,9 +111,9 @@ export default class GameController {
 
       if(imagesArray.length ===2 && imagesArray[0] === imagesArray[1]){
         //Make updated board cell be equal to "" - makes the div to be hidden
-        //show second image, wait for correctmove
-        
-        const correctMove = update.board.map(row => row.map(cell => {
+      
+  
+        const correctMove = update.board.map(row => row.map(cell =>{
           if(cell === imagesArray[0]){
             return ""
           }
@@ -121,11 +121,20 @@ export default class GameController {
             return cell
           }
         }))
+        
+        game.board = update.board
+        await game.save()
+    
+        io.emit('action', {
+          type: 'UPDATE_GAME',
+          payload: game
+        })
 
         await sleep(2000);
-        update.board = correctMove;
+        update.board = correctMove; 
+        
+        player.symbol === 'x' ? game.scoreX += 10 : game.scoreO +=10
 
-        player.score += 10
       }
       else if(imagesArray.length===2 && imagesArray[0] !== imagesArray[1]){
         const wrongMove = update.board.map(row => row.map(cell => {
@@ -136,14 +145,21 @@ export default class GameController {
             return cell
           }
         }))
+
+        game.board = update.board
+        await game.save()
+        
+        io.emit('action', {
+          type: 'UPDATE_GAME',
+          payload: game
+        })  
+
+        await sleep(2000);
         update.board = wrongMove
+
+
         game.turn = (player.symbol === 'x' && imagesArray.length ===2) ? 'o' : 'x'
       }
-      // else{
-      //   game.turn = (player.symbol === 'x' && imagesArray.length ===2) ? 'o' : 'x'
-      //   console.log(imagesArray)
-      //   // make update.board cells turn back to null with some latency
-      // }
     }
 
     game.board = update.board
@@ -153,7 +169,7 @@ export default class GameController {
       type: 'UPDATE_GAME',
       payload: game
     })
-
+    
     return game
   }
 
