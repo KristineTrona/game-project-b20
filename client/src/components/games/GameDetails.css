@@ -1,9 +1,37 @@
 
 
 
-.outer-paper {
-  margin-top: 20px;
+.paper-wrapper {
+  display:grid;
+  grid-template-columns: 40% 60%;
+  grid-column-gap: 30px;
+  padding-top: 30px;
   margin: auto;
+  width: 70%;
+}
+
+.left-paper, .right-paper{
   padding: 20px;
-  width: 60%;
+}
+
+.board-wrapper{
+  width: 80%;
+  padding: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.your-turn{
+  color: rgb(45, 156, 45);
+  font-size: 18px;
+  font-weight: bold;
+  background-color: rgb(235, 235, 192);
+  padding: 5px;
+}
+
+.winner-div{
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+  text-align: center;
 }
