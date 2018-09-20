@@ -21,8 +21,10 @@
 }
 
 .card-front{
-  background-image: url("https://previews.123rf.com/images/lenm/lenm1505/lenm150500246/40109330-illustration-of-a-colorful-abstract-question-mark-geometric-design.jpg");
-  background-size: 60%;
+  /* background-image: url("https://previews.123rf.com/images/lenm/lenm1505/lenm150500246/40109330-illustration-of-a-colorful-abstract-question-mark-geometric-design.jpg");
+  background-size: 60%; */
+  background-size: 70%;
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Orange_question.svg/2000px-Orange_question.svg.png");
   /* background-image: url("https://cdn.shopify.com/s/files/1/1061/1924/products/Man_Detective_Emoji_Icon_ios10_large.png?v=1513251045");
   background-size: 80%; */
   background-position-x: center;
