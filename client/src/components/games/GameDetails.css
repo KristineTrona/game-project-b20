@@ -1,3 +1,8 @@
+.game-wrapper{
+  background-image: url("https://thumbs.dreamstime.com/b/floral-mosaic-tiles-seamless-pattern-background-vector-flower-decor-elements-31416512.jpg");
+  background-size: 70%;
+}
+
 
 .paper-wrapper {
   display:grid;
