@@ -22,16 +22,13 @@ class GameDetails extends PureComponent {
     this.props.getImages()
   }
 
-  componentDidUpdate(){
-
-  }
 
 
   joinGame = () => this.props.joinGame(this.props.game.id)
 
   makeMove = (toRow, toCell) => {
 
-    const {game, updateGame, images} = this.props  
+    const {game, updateGame} = this.props  
 
     // const card = document.getElementById(`${toRow}-${toCell}`)
     // card.className = "board-tile-back-selected"
