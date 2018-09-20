@@ -24,6 +24,23 @@ state = {
     this.props.getImages()
   }
 
+  findUserX = () =>{
+    if(this.props.game.status === "started"){
+    const playerX = this.props.game.players.find(player => player.symbol === "x")
+    const userX = playerX.userId
+
+    return Object.values(this.props.users).find(user => user.id===userX).firstName
+    }
+  }
+
+  findUserO = () =>{
+    if(this.props.game.status === "started"){
+
+    const playerO = this.props.game.players.find(player => player.symbol === "o")
+    const userO= playerO.userId
+    return Object.values(this.props.users).find(user => user.id===userO).firstName
+    }
+  }
 
 
   joinGame = () => this.props.joinGame(this.props.game.id)
