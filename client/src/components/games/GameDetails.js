@@ -55,8 +55,6 @@ class GameDetails extends PureComponent {
 
   
 
-
-
   render() {
     const {game, images, users, authenticated, userId} = this.props
 
@@ -73,7 +71,9 @@ class GameDetails extends PureComponent {
       .filter(p => p.symbol === game.winner)
       .map(p => p.userId)[0]
 
-    return (<Paper className="outer-paper">
+    return (
+     <div>
+    <Paper className="outer-paper">
       <h1>Game #{game.id}</h1>
 
       <p>Status: {game.status}</p>
@@ -99,9 +99,15 @@ class GameDetails extends PureComponent {
 
       {
         game.status !== 'pending' &&
+        <div>
         <Board board={game.board} makeMove={this.makeMove} images={images.allImages}/>
+        <p> Score: </p>
+        <p> Player 1: {game.scoreX}</p>
+        <p> Player 2: {game.scoreO}</p>
+        </div>
       }
-    </Paper>)
+    </Paper>
+    </div>)
   }
 }
 

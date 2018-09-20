@@ -39,10 +39,16 @@ export class Game extends BaseEntity {
   turn: Symbol
 
   @Column('char', {length:1, nullable: true})
-  winner: Symbol
+  winner: Symbol | string
 
   @Column('text', {default: 'pending'})
   status: Status
+
+  @Column({default: 0})
+  scoreX: number
+
+  @Column ({default: 0})
+  scoreO: number
 
   // this is a relation, read more about them here:
   // http://typeorm.io/#/many-to-one-one-to-many-relations
@@ -68,4 +74,7 @@ export class Player extends BaseEntity {
 
   @Column('char', {length: 1})
   symbol: Symbol
+
+  @Column({default: 0})
+  score: number
 }

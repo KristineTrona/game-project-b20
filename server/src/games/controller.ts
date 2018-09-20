@@ -4,10 +4,11 @@ import {
 } from 'routing-controllers'
 import User from '../users/entity'
 import { Game, Player, Board } from './entities'
-import {IsBoard} from './logic'
+import {IsBoard, finished,calculateWinner} from './logic'
 import { Validate } from 'class-validator'
 import {io} from '../index'
-// calculateWinner, finished, isValidTransition
+const sleep = require('sleep-promise')
+// isValidTransition
 
 
 class GameUpdate {
@@ -95,23 +96,23 @@ export default class GameController {
     //   throw new BadRequestError(`Invalid move`)
     // }    
 
-    // const winner = calculateWinner(update.board)
-    // if (winner) {
-    //   game.winner = winner
-    //   game.status = 'finished'
-    // }
-    // else if (finished(update.board)) {
-    //   game.status = 'finished'
-    // }
+    const winner = calculateWinner(finished, game.scoreX, game.scoreO)
+
+    if (winner) {
+      game.winner = winner
+      game.status = 'finished'
+    }
+
+
     else {
-      const selectedImages = await update.board.map(row => row.filter(cell => cell !== null))
+      const selectedImages = await update.board.map(row => row.filter(cell => cell !== null && cell!==""))
     
-      const imagesArray = [].concat.apply([], selectedImages)
+      let imagesArray = [].concat.apply([], selectedImages)
 
       if(imagesArray.length ===2 && imagesArray[0] === imagesArray[1]){
-        //Make updated board cell be equal to ""
-        
-        const correctMove = update.board.map(row => row.map(cell => {
+        //Make updated board cell be equal to "" - makes the div to be hidden     
+  
+        const correctMove = update.board.map(row => row.map(cell =>{
           if(cell === imagesArray[0]){
             return ""
           }
@@ -119,22 +120,55 @@ export default class GameController {
             return cell
           }
         }))
-        update.board = correctMove
+        
+        game.board = update.board
+        await game.save()
+    
+        io.emit('action', {
+          type: 'UPDATE_GAME',
+          payload: game
+        })
+
+        await sleep(1000);
+        update.board = correctMove; 
+        
+        player.symbol === 'x' ? game.scoreX += 10 : game.scoreO +=10
+
       }
-      else{
+      else if(imagesArray.length===2 && imagesArray[0] !== imagesArray[1]){
+        const wrongMove = update.board.map(row => row.map(cell => {
+          if(cell === imagesArray[0] || cell===imagesArray[1]){
+            return null
+          }
+          else {
+            return cell
+          }
+        }))
+
+        game.board = update.board
+        await game.save()
+        
+        io.emit('action', {
+          type: 'UPDATE_GAME',
+          payload: game
+        })  
+
+        await sleep(1000);
+        update.board = wrongMove
+
         game.turn = (player.symbol === 'x' && imagesArray.length ===2) ? 'o' : 'x'
-        // make update.board cells turn back to null with some latency
       }
     }
 
     game.board = update.board
+  
     await game.save()
     
     io.emit('action', {
       type: 'UPDATE_GAME',
       payload: game
     })
-
+    
     return game
   }
 
