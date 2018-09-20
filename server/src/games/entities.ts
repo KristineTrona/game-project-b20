@@ -2,10 +2,10 @@ import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, Index, OneToMany, M
 import User from '../users/entity'
 //import {Emoji} from '../emojis/entity';
 
+// export type CorrectMove = (string|number|null)[]
 export type Symbol= "x" | "o"
-export type Row = Number[] | null[]
+export type Row = Array<number|null|string> 
 export type Board = Array<Row>
-
 type Status = 'pending' | 'started' | 'finished'
 
 
@@ -68,4 +68,7 @@ export class Player extends BaseEntity {
 
   @Column('char', {length: 1})
   symbol: Symbol
+
+  @Column({default: 0})
+  score: number
 }
