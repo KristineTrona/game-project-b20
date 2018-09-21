@@ -8,6 +8,7 @@ import {userId} from '../../jwt'
 import Paper from 'material-ui/Paper'
 import Board from './Board'
 import './GameDetails.css'
+import music from '../../lib/sounds/bike-rides.mp3'
 
 class GameDetails extends PureComponent {
 state = {
@@ -106,6 +107,10 @@ state = {
 
 return (
   <div className = "game-wrapper">
+  <audio autoPlay loop> 
+    <source src={music} type="audio/mpeg"/>
+    If you see this, update your browser
+  </audio>
    <div className="paper-wrapper">
     <Paper className="left-paper">
       <h3>Game #{game.id}</h3>

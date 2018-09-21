@@ -2,6 +2,9 @@
   display: grid;
   grid-template-rows: 1fr 1fr 1fr 1fr;
   grid-row-gap: 10px;
+  max-width: 60vw;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .row-wrapper{
