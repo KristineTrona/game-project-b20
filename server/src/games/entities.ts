@@ -2,29 +2,27 @@ import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, Index, OneToMany, M
 import User from '../users/entity'
 //import {Emoji} from '../emojis/entity';
 
+// export type CorrectMove = (string|number|null)[]
 export type Symbol= "x" | "o"
-export type Row = String[]
-export type Board = [ Row, Row, Row ]
-
+export type Row = Array<number|null|string> 
+export type Board = Array<Row>
 type Status = 'pending' | 'started' | 'finished'
 
 
-const emojis = ["https://banner2.kisspng.com/20171201/b49/smiling-face-with-sunglasses-cool-emoji-png-5a222c11e0dd77.6968424215121889459211.jpg",
- "https://banner2.kisspng.com/20180325/ute/kisspng-emoji-love-heart-sticker-emoticon-emoji-5ab86fdec2e6d0.1707378915220367027983.jpg",
-  "https://banner2.kisspng.com/20180202/srq/kisspng-laughter-face-with-tears-of-joy-emoji-emoticon-cli-crying-emoji-png-transparent-image-5a754051c0cbe5.6174084415176336177897.jpg",
-   "https://banner2.kisspng.com/20180402/ogw/kisspng-emoji-wink-smiley-clip-art-crying-emoji-5ac2953f831bb2.847187371522701631537.jpg",
-    "https://banner2.kisspng.com/20180202/biw/kisspng-t-shirt-emoji-domain-nerd-glasses-sunglasses-emoji-png-clipart-5a73fc78eb8030.6868989215175507129646.jpg",
-     "https://banner2.kisspng.com/20180404/qye/kisspng-pile-of-poo-emoji-sadness-emoticon-sad-emoji-5ac49f3e848fd4.339742351522835262543.jpg"]
+const images = [1,2,3,4,5,6,7,8,9,10,11,12]
 
-
-const starterBoard = emojis.concat(emojis)
+const starterBoard = images.concat(images)
 
 const randomizedBoard = starterBoard.sort(() => 0.5 - Math.random())
 
-const emptyRow1: Row = [randomizedBoard[0], randomizedBoard[1], randomizedBoard[2], randomizedBoard[3]]
-const emptyRow2: Row = [randomizedBoard[4], randomizedBoard[5], randomizedBoard[6], randomizedBoard[7]]
-const emptyRow3: Row = [randomizedBoard[8], randomizedBoard[9], randomizedBoard[10], randomizedBoard[11]]
-const emptyBoard: Board = [ emptyRow1, emptyRow2, emptyRow3 ]
+const emptyRow: Row = [null, null, null, null, null, null]
+const emptyBoard: Board = [ emptyRow, emptyRow, emptyRow, emptyRow ]
+
+const hiddenRow1: Row = [randomizedBoard[0], randomizedBoard[1], randomizedBoard[2], randomizedBoard[3], randomizedBoard[4], randomizedBoard[5]]
+const hiddenRow2: Row = [randomizedBoard[6], randomizedBoard[7], randomizedBoard[8], randomizedBoard[9], randomizedBoard[10], randomizedBoard[11]]
+const hiddenRow3: Row = [randomizedBoard[12], randomizedBoard[13], randomizedBoard[14], randomizedBoard[15], randomizedBoard[16], randomizedBoard[17]]
+const hiddenRow4: Row = [randomizedBoard[18], randomizedBoard[19], randomizedBoard[20], randomizedBoard[21], randomizedBoard[22], randomizedBoard[23]]
+const hiddenBoard: Board = [ hiddenRow1, hiddenRow2, hiddenRow3, hiddenRow4 ]
 
 @Entity()
 export class Game extends BaseEntity {
@@ -35,14 +33,23 @@ export class Game extends BaseEntity {
   @Column('json', {default: emptyBoard})
   board: Board
 
+  @Column ('json', {default: hiddenBoard})
+  hiddenboard: Board
+
   @Column('char', {length:1, default: 'x'})
   turn: Symbol
 
   @Column('char', {length:1, nullable: true})
-  winner: Symbol
+  winner: Symbol | string
 
   @Column('text', {default: 'pending'})
   status: Status
+
+  @Column({default: 0})
+  scoreX: number
+
+  @Column ({default: 0})
+  scoreO: number
 
   // this is a relation, read more about them here:
   // http://typeorm.io/#/many-to-one-one-to-many-relations
@@ -68,4 +75,5 @@ export class Player extends BaseEntity {
 
   @Column('char', {length: 1})
   symbol: Symbol
+
 }

@@ -4,11 +4,10 @@ import {
 } from 'routing-controllers'
 import User from '../users/entity'
 import { Game, Player, Board } from './entities'
-import {IsBoard} from './logic'
+import {IsBoard, finished,calculateWinner} from './logic'
 import { Validate } from 'class-validator'
 import {io} from '../index'
-import { clearLine } from 'readline';
-//isValidTransition, calculateWinner, finished
+const sleep = require('sleep-promise')
 
 
 class GameUpdate {
@@ -91,12 +90,14 @@ export default class GameController {
 
     if (!player) throw new ForbiddenError(`You are not part of this game`)
     if (game.status !== 'started') throw new BadRequestError(`The game is not started yet`)
-    if (player.symbol !== game.turn) throw new BadRequestError(`It's not your turn`)
-    // if (!isValidTransition(player.symbol, game.board, update.board)) {
-    //   throw new BadRequestError(`Invalid move`)
-    // }    
+    if (player.symbol !== game.turn) throw new BadRequestError(`It's not your turn`)    
 
-    // const winner = calculateWinner(update.board)
+    // const result = finished(update.board)
+    // console.log(result)
+    // console.log(update.board)
+
+    // const winner = calculateWinner(result, game.scoreX, game.scoreO)
+      
     // if (winner) {
     //   game.winner = winner
     //   game.status = 'finished'
@@ -104,17 +105,85 @@ export default class GameController {
     // else if (finished(update.board)) {
     //   game.status = 'finished'
     // }
+    
     else {
-      game.turn = player.symbol === 'x' ? 'o' : 'x'
+      const selectedImages = await update.board.map(row => row.filter(cell => cell !== null && cell!==""))
+    
+      let imagesArray = [].concat.apply([], selectedImages)
+
+      if(imagesArray.length ===2 && imagesArray[0] === imagesArray[1]){
+        //Make updated board cell be equal to "" - makes the div to be hidden     
+  
+        const correctMove = update.board.map(row => row.map(cell =>{
+          if(cell === imagesArray[0]){
+            return ""
+          }
+          else {
+            return cell
+          }
+        }))
+        
+        game.board = update.board
+        await game.save()
+    
+        io.emit('action', {
+          type: 'UPDATE_GAME',
+          payload: game
+        })
+
+        await sleep(1000);
+        update.board = correctMove; 
+
+        player.symbol === 'x' ? game.scoreX += 10 : game.scoreO +=10
+
+        const result = finished(update.board)
+      
+
+        const winner = calculateWinner(result, game.scoreX, game.scoreO)
+        
+          if (winner) {
+            game.winner = winner
+            game.status = 'finished'
+          }
+          else if (finished(update.board)) {
+            game.status = 'finished'
+          }
+      }
+      else if(imagesArray.length===2 && imagesArray[0] !== imagesArray[1]){
+        const wrongMove = update.board.map(row => row.map(cell => {
+          if(cell === imagesArray[0] || cell===imagesArray[1]){
+            return null
+          }
+          else {
+            return cell
+          }
+        }))
+
+        game.board = update.board
+        await game.save()
+        
+        io.emit('action', {
+          type: 'UPDATE_GAME',
+          payload: game
+        })  
+
+        await sleep(1000);
+        update.board = wrongMove
+
+        game.turn = (player.symbol === 'x' && imagesArray.length ===2) ? 'o' : 'x'
+      }
     }
+    
+
     game.board = update.board
+  
     await game.save()
     
     io.emit('action', {
       type: 'UPDATE_GAME',
       payload: game
     })
-
+    
     return game
   }
 

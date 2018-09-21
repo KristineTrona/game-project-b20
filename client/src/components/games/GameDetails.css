@@ -1,6 +1,56 @@
-.outer-paper {
-  margin-top: 20px;
+.game-wrapper{
+  background-image: url("http://oonana.co.uk/wp-content/uploads/2017/11/poo-emoji-pink-bck-ground.jpg");
+  /* background-image: url("https://thumbs.dreamstime.com/b/floral-mosaic-tiles-seamless-pattern-background-vector-flower-decor-elements-31416512.jpg");
+  background-size: 70%; */
+  background-repeat: no-repeat;
+}
+
+
+.paper-wrapper {
+  display:grid;
+  grid-template-columns: 40% 60%;
+  grid-column-gap: 30px;
+  padding-top: 30px;
   margin: auto;
+  width: 70%;
+}
+
+.left-paper, .right-paper{
   padding: 20px;
-  width: 60%;
+}
+
+.gameboard-wrapper{
+  width: 80%;
+  height: 100vh;
+  padding: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.your-turn{
+  color: rgb(45, 156, 45);
+  font-size: 18px;
+  font-weight: bold;
+  background-color: rgb(235, 235, 192);
+  padding: 5px;
+}
+
+.winner-div{
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.gameMusic{
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  display: block;
+}
+
+.emoji-animation img{
+  min-width: 350px;
+  min-height: 350px;
+  
 }
