@@ -8,7 +8,7 @@ import {userId} from '../../jwt'
 import Paper from 'material-ui/Paper'
 import Board from './Board'
 import './GameDetails.css'
-import happyLoop from '../../lib/sounds/happy-loop.mp3'
+import music from '../../lib/sounds/bike-rides.mp3'
 
 class GameDetails extends PureComponent {
 state = {
@@ -108,7 +108,7 @@ state = {
 return (
   <div className = "game-wrapper">
   <audio autoPlay loop> 
-    <source src={happyLoop} type="audio/mpeg"/>
+    <source src={music} type="audio/mpeg"/>
     If you see this, update your browser
   </audio>
    <div className="paper-wrapper">
