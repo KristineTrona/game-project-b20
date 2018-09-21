@@ -11,7 +11,7 @@ import './GameDetails.css'
 
 class GameDetails extends PureComponent {
 state = {
-  condition: false
+  condition: true
 }
   componentWillMount() {
     if (this.props.authenticated) {
@@ -44,13 +44,16 @@ state = {
 
   joinGame = () => this.props.joinGame(this.props.game.id)
 
-  makeMove = (toRow, toCell) => {
+  makeMove = async (toRow, toCell) => {
 
     const {game, updateGame} = this.props  
     
-    this.setState({
-      condition: !this.state.condition
-    })
+    // setTimeout(()=>{
+    //   this.setState({
+    //     condition: !this.state.condition
+    //   })
+    // }, 1000)
+
 
     // const card = document.getElementById(`${toRow}-${toCell}`)
     // card.className = "board-tile-back-selected"
@@ -69,11 +72,23 @@ state = {
         else return cell
       }))
 
-    updateGame(game.id, board)
+    await updateGame(game.id, board)
 
+    console.log('should flip??')
+
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!this.props || !prevProps.game) return
+    if (prevProps.game!== this.props.game){
+      this.setState({
+        condition: !this.state.condition
+       })
     }
+  }
 
   render() {
+    console.log(this.state)
     const {game, images, users, authenticated, userId} = this.props
 
     if (!authenticated) return (
@@ -89,69 +104,61 @@ state = {
       .filter(p => p.symbol === game.winner)
       .map(p => p.userId)[0]
 
-    return (
-    <div className = "game-wrapper">
-     <div className="paper-wrapper">
-      <Paper className="left-paper">
-        <h3>Game #{game.id}</h3>
+return (
+  <div className = "game-wrapper">
+   <div className="paper-wrapper">
+    <Paper className="left-paper">
+      <h3>Game #{game.id}</h3>
 
-        <p>Status: {game.status}</p>
+      <p>Status: {game.status}</p>
 
-        {
-          game.status === 'started' &&
-          player && player.symbol === game.turn &&
-          <div className="your-turn">It's your turn!</div>
-        }
-
-        {
-          game.status === 'pending' &&
-          game.players.map(p => p.userId).indexOf(userId) === -1 &&
-          <button onClick={this.joinGame}>Join Game</button>
-        }
-
-        {
-          winner &&
-          <p>Winner: {users[winner].firstName}</p>
-        }
-      </Paper>
-      <Paper className="right-paper">
-        <h3> Score: </h3>
-        <p>  {this.findUserX()}: {game.scoreX} points </p>
-        <p> {this.findUserO()}: {game.scoreO} points </p>
-      </Paper>
-      </div>
-      <div className="board-wrapper">
-        {
-          game.status === 'started' &&
-          <div>
-          <Board board={game.board} makeMove={this.makeMove} images={images.allImages}/>
-          </div>
-
-        } 
-
-        {
-          game.status === 'finished' &&
-          <div className = "winner-div">
-            <h4>The winner is: </h4>
-            <h1>{game.winner === "o" ? this.findUserO() : this.findUserX() } </h1>
-          </div>
-        }
-      </div>
-    </div>)
-  }
+      {
+        game.status === 'started' &&
+        player && player.symbol === game.turn &&
+        <div className="your-turn">It's your turn!</div>
+      }
+      {
+        game.status === 'pending' &&
+        game.players.map(p => p.userId).indexOf(userId) === -1 &&
+        <button onClick={this.joinGame}>Join Game</button>
+      }
+      {
+        winner &&
+        <p>Winner: {users[winner].firstName}</p>
+      }
+    </Paper>
+    <Paper className="right-paper">
+      <h3> Score: </h3>
+      <p>  {this.findUserX()}: {game.scoreX} points </p>
+      <p> {this.findUserO()}: {game.scoreO} points </p>
+    </Paper>
+    </div>
+    <div className="gameboard-wrapper">
+      {
+        game.status === 'started' &&
+        <div>
+        <Board board={game.board} makeMove={this.makeMove} images={images.allImages} className={ this.state.condition ? "is-flipped" : "" }/>
+        </div>
+      } 
+      {
+        game.status === 'finished' &&
+        <div className = "winner-div">
+          <h4>The winner is: </h4>
+          <h1>{game.winner === "o" ? this.findUserO() : this.findUserX() } </h1>
+        </div>
+      }
+    </div>
+  </div>)
 }
-
-
+}
 const mapStateToProps = (state, props) => ({
-  authenticated: state.currentUser !== null,
-  userId: state.currentUser && userId(state.currentUser.jwt),
-  game: state.games && state.games[props.match.params.id],
-  users: state.users,
-  images: state.images
+authenticated: state.currentUser !== null,
+userId: state.currentUser && userId(state.currentUser.jwt),
+game: state.games && state.games[props.match.params.id],
+users: state.users,
+images: state.images
 })
-
 const mapDispatchToProps = {
-  getGames, getUsers, joinGame, updateGame, getImages, selectImages
+getGames, getUsers, joinGame, updateGame, getImages, selectImages
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(GameDetails)

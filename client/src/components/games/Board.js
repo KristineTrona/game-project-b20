@@ -3,7 +3,8 @@ import './Board.css'
 
 
 const renderCel = (makeMove, rowIndex, cellIndex, cell, hasTurn, images, className) => {
-    return(
+  
+  return(
       <div 
         key={`${rowIndex}-${cellIndex}`}
         className="scene">
@@ -21,7 +22,7 @@ const renderCel = (makeMove, rowIndex, cellIndex, cell, hasTurn, images, classNa
         }
 
         {cell!== null && cell !== "" && 
-        <div className={`card ${className}`}>
+        <div className={`card`}>
         <div
           className="card-back"
           id={`${rowIndex}-${cellIndex}`}
