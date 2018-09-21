@@ -26,7 +26,7 @@ state = {
   }
 
   findUserX = () =>{
-    if(this.props.game.status === "started"){
+    if(this.props.game.status === "started" || this.props.game.status === "finished"){
     const playerX = this.props.game.players.find(player => player.symbol === "x")
     const userX = playerX.userId
 
@@ -35,7 +35,7 @@ state = {
   }
 
   findUserO = () =>{
-    if(this.props.game.status === "started"){
+    if(this.props.game.status === "started" || this.props.game.status === "finished"){
 
     const playerO = this.props.game.players.find(player => player.symbol === "o")
     const userO= playerO.userId
@@ -107,10 +107,6 @@ state = {
 
 return (
   <div className = "game-wrapper">
-  <audio autoPlay loop> 
-    <source src={music} type="audio/mpeg"/>
-    If you see this, update your browser
-  </audio>
    <div className="paper-wrapper">
     <Paper className="left-paper">
       <h3>Game #{game.id}</h3>
@@ -131,6 +127,7 @@ return (
         winner &&
         <p>Winner: {users[winner].firstName}</p>
       }
+
     </Paper>
     <Paper className="right-paper">
       <h3> Score: </h3>
@@ -142,16 +139,19 @@ return (
       {
         game.status === 'started' &&
         <div>
-        <Board board={game.board} makeMove={this.makeMove} images={images.allImages} className={ this.state.condition ? "is-flipped" : "" }/>
+        <Board board={game.board} makeMove={this.makeMove} images={images.allImages} className={ this.state.condition ? "is-flipped" : "" }/>  
         </div>
       } 
       {
         game.status === 'finished' &&
-        <div className = "winner-div">
-          <h4>The winner is: </h4>
-          <h1>{game.winner === "o" ? this.findUserO() : this.findUserX() } </h1>
+        <div className = "emoji-animation" >
+          <img src="https://media1.giphy.com/media/OGEbQXwNesZ6U/giphy.gif" alt="emoji-animation"/> 
         </div>
       }
+      <audio className = "gameMusic" autoPlay loop controls> 
+        <source src={music} type="audio/mpeg"/>
+          If you see this, update your browser
+      </audio>  
     </div>
   </div>)
 }

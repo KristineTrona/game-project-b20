@@ -8,7 +8,6 @@ import {IsBoard, finished,calculateWinner} from './logic'
 import { Validate } from 'class-validator'
 import {io} from '../index'
 const sleep = require('sleep-promise')
-// isValidTransition
 
 
 class GameUpdate {
@@ -91,10 +90,7 @@ export default class GameController {
 
     if (!player) throw new ForbiddenError(`You are not part of this game`)
     if (game.status !== 'started') throw new BadRequestError(`The game is not started yet`)
-    if (player.symbol !== game.turn) throw new BadRequestError(`It's not your turn`)
-    // if (!isValidTransition(player.symbol, game.board, update.board)) {
-    //   throw new BadRequestError(`Invalid move`)
-    // }    
+    if (player.symbol !== game.turn) throw new BadRequestError(`It's not your turn`)    
 
     // const result = finished(update.board)
     // console.log(result)
@@ -141,6 +137,7 @@ export default class GameController {
         player.symbol === 'x' ? game.scoreX += 10 : game.scoreO +=10
 
         const result = finished(update.board)
+      
 
         const winner = calculateWinner(result, game.scoreX, game.scoreO)
         
